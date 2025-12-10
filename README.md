@@ -1,26 +1,14 @@
-# LeviLamina Mod Template
+# EconomyBridge - 多经济系统对接桥
 
-Mod Template for LeviLamina
+EconomyBridge 是一个静态库，向上提供统一的 `CRUD` 接口，向下对接多个经济系统
 
-## Usage
+> 简单说就是**秦始皇**统一接口，避免每个 mod 都复制粘贴一份对接代码以及 Windows 符号调用
 
-For detailed instructions, see the [LeviLamina Documentation](https://lamina.levimc.org/developer_guides/tutorials/create_your_first_mod/)
+支持的后端
 
-1. Generate a new repository from this template
-2. Clone the new repository
-3. Change the mod name and the expected LeviLamina version in `xmake.lua`
-4. Add your code.
-5. Run `xmake f -y -p windows -a x64 -m release` in the root of the repository
-6. Run `xmake` to build the mod.
+- [x] LegacyMoney (Windows Symbol call)
+- [x] ScoreBoard (Only Online Mode)
 
-After a successful build, you will find mod in `bin/`
+## 许可
 
-## Contributing
-
-Ask questions by creating an issue.
-
-PRs accepted.
-
-## License
-
-CC0-1.0 © LeviMC(LiteLDev)
+LGPL-3.0 or later
