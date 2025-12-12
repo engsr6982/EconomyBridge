@@ -29,11 +29,11 @@ target("EconomyBridge") -- Change this to your mod name.
     add_defines("NOMINMAX", "UNICODE")
     add_packages("levilamina")
     set_exceptions("none") -- To avoid conflicts with /EHa.
-    set_kind("shared")
+    set_kind("static")
     set_languages("c++20")
     set_symbols("debug")
     add_headerfiles("src/**.h")
-    add_files("src/**.cpp", "src/**.cc")
+    add_files("src/**.cpp")
     add_includedirs("src")
     -- if is_config("target_type", "server") then
     --     add_includedirs("src-server")
