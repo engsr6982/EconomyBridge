@@ -2,14 +2,11 @@
 
 namespace econbridge::detail {
 
-std::string_view NullEconomy::getName() const { return BackendName; }
-int64_t          NullEconomy::getBalance(const mce::UUID& uuid) const { return 0; }
-bool             NullEconomy::setBalance(const mce::UUID& uuid, int64_t amount) { return true; }
-bool             NullEconomy::addBalance(const mce::UUID& uuid, int64_t amount) { return true; }
-bool             NullEconomy::reduceBalance(const mce::UUID& uuid, int64_t amount) { return true; }
-bool             NullEconomy::transfer(const mce::UUID& from, const mce::UUID& to, int64_t amount) { return true; }
-
-std::string NullEconomyProvider::getName() const { return NullEconomy::BackendName; }
-bool        NullEconomyProvider::isAvailable() const { return true; }
+bool    NullEconomy::isAvailable() { return true; }
+int64_t NullEconomy::get(const mce::UUID&) const { return 0; }
+bool    NullEconomy::set(const mce::UUID&, int64_t) { return true; }
+bool    NullEconomy::add(const mce::UUID&, int64_t) { return true; }
+bool    NullEconomy::reduce(const mce::UUID&, int64_t) { return true; }
+bool    NullEconomy::transfer(const mce::UUID&, const mce::UUID&, int64_t) { return true; }
 
 } // namespace econbridge::detail

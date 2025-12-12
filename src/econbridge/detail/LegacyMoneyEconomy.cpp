@@ -1,7 +1,5 @@
 #include "LegacyMoneyEconomy.h"
 
-#include "econbridge/EconomyBridge.h"
-
 #include <ll/api/service/PlayerInfo.h>
 
 #include <stdexcept>
@@ -17,7 +15,12 @@ using LLMoney_Add    = bool (*)(std::string, int64_t);
 using LLMoney_Reduce = bool (*)(std::string, int64_t);
 using LLMoney_Trans  = bool (*)(std::string from, std::string to, int64_t val, const std::string& note);
 
-bool LegacyMoneyEconomy::isLegacyMoneyLoaded() { return GetModuleHandle(LegacyMoneyModuleName) != nullptr; }
+LegacyMoneyEconomy::LegacyMoneyEconomy() {
+    if (!isAvailable()) {
+        throw std::runtime_error("LegacyMoney is not loaded.");
+    }
+}
+bool LegacyMoneyEconomy::isAvailable() { return GetModuleHandle(LegacyMoneyModuleName) != nullptr; }
 std::optional<std::string> LegacyMoneyEconomy::uuid2xuid(mce::UUID const& uuid) {
     if (auto entry = ll::service::PlayerInfo::getInstance().fromUuid(uuid)) {
         return entry->xuid;
@@ -25,9 +28,8 @@ std::optional<std::string> LegacyMoneyEconomy::uuid2xuid(mce::UUID const& uuid) 
     return std::nullopt;
 }
 
-std::string_view LegacyMoneyEconomy::getName() const { return BackendName; }
-int64_t          LegacyMoneyEconomy::getBalance(const mce::UUID& uuid) const {
-    if (!isLegacyMoneyLoaded()) {
+int64_t LegacyMoneyEconomy::get(const mce::UUID& uuid) const {
+    if (!isAvailable()) {
         throw std::runtime_error("LegacyMoney is not loaded.");
     }
     auto func = reinterpret_cast<LLMoney_Get>(GetProcAddress(GetModuleHandle(LegacyMoneyModuleName), "LLMoney_Get"));
@@ -39,8 +41,8 @@ int64_t          LegacyMoneyEconomy::getBalance(const mce::UUID& uuid) const {
     }
     return 0;
 }
-bool LegacyMoneyEconomy::setBalance(const mce::UUID& uuid, int64_t amount) {
-    if (!isLegacyMoneyLoaded()) {
+bool LegacyMoneyEconomy::set(const mce::UUID& uuid, int64_t amount) {
+    if (!isAvailable()) {
         throw std::runtime_error("LegacyMoney is not loaded.");
     }
     auto func = reinterpret_cast<LLMoney_Set>(GetProcAddress(GetModuleHandle(LegacyMoneyModuleName), "LLMoney_Set"));
@@ -52,8 +54,8 @@ bool LegacyMoneyEconomy::setBalance(const mce::UUID& uuid, int64_t amount) {
     }
     return false;
 }
-bool LegacyMoneyEconomy::addBalance(const mce::UUID& uuid, int64_t amount) {
-    if (!isLegacyMoneyLoaded()) {
+bool LegacyMoneyEconomy::add(const mce::UUID& uuid, int64_t amount) {
+    if (!isAvailable()) {
         throw std::runtime_error("LegacyMoney is not loaded.");
     }
     auto func = reinterpret_cast<LLMoney_Add>(GetProcAddress(GetModuleHandle(LegacyMoneyModuleName), "LLMoney_Add"));
@@ -65,8 +67,8 @@ bool LegacyMoneyEconomy::addBalance(const mce::UUID& uuid, int64_t amount) {
     }
     return false;
 }
-bool LegacyMoneyEconomy::reduceBalance(const mce::UUID& uuid, int64_t amount) {
-    if (!isLegacyMoneyLoaded()) {
+bool LegacyMoneyEconomy::reduce(const mce::UUID& uuid, int64_t amount) {
+    if (!isAvailable()) {
         throw std::runtime_error("LegacyMoney is not loaded.");
     }
     auto func =
@@ -80,7 +82,7 @@ bool LegacyMoneyEconomy::reduceBalance(const mce::UUID& uuid, int64_t amount) {
     return false;
 }
 bool LegacyMoneyEconomy::transfer(const mce::UUID& from, const mce::UUID& to, int64_t amount) {
-    if (!isLegacyMoneyLoaded()) {
+    if (!isAvailable()) {
         throw std::runtime_error("LegacyMoney is not loaded.");
     }
     auto func =
@@ -95,8 +97,5 @@ bool LegacyMoneyEconomy::transfer(const mce::UUID& from, const mce::UUID& to, in
     return func(*uf, *ut, amount, "");
 }
 
-
-std::string LegacyMoneyEconomyProvider::getName() const { return LegacyMoneyEconomy::BackendName; }
-bool        LegacyMoneyEconomyProvider::isAvailable() const { return LegacyMoneyEconomy::isLegacyMoneyLoaded(); }
 
 } // namespace econbridge::detail
