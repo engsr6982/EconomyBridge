@@ -32,7 +32,7 @@ target("EconomyBridge") -- Change this to your mod name.
     set_kind("static")
     set_languages("c++20")
     set_symbols("debug")
-    add_headerfiles("src/**.h")
+    add_headerfiles("src/(econbridge/**.h)")
     add_files("src/**.cpp")
     add_includedirs("src")
     -- if is_config("target_type", "server") then
