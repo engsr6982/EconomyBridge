@@ -1,11 +1,13 @@
 #include "EconomyBridge.h"
 
 #include "detail/LegacyMoneyEconomy.h"
+#include "detail/NullEconomy.h"
 #include "detail/ScoreboardEconomy.h"
 
 namespace econbridge {
 
 EconomyBridge::EconomyBridge() {
+    registerProvider<detail::NullEconomyProvider>();
     registerProvider<detail::LegacyMoneyEconomyProvider>();
     registerProvider<detail::ScoreboardEconomyProvider>();
 }

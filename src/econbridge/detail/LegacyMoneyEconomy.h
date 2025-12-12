@@ -9,7 +9,7 @@ namespace econbridge::detail {
 
 class LegacyMoneyEconomy final : public IEconomy {
 public:
-    static constexpr auto             BackendName = "LegacyMoney";
+    static constexpr auto             BackendName = "LegacyMoneyEconomy";
     static bool                       isLegacyMoneyLoaded();
     static std::optional<std::string> uuid2xuid(mce::UUID const& uuid);
 
@@ -24,8 +24,8 @@ public:
 class LegacyMoneyEconomyProvider final : public IEconomyProvider,
                                          public ICreateFactory<LegacyMoneyEconomyProvider, LegacyMoneyEconomy> {
 public:
-    const std::string& getName() const override;
-    bool               isAvailable() const override;
+    std::string getName() const override;
+    bool        isAvailable() const override;
 };
 static_assert(concepts::EconomyProviderImpl<LegacyMoneyEconomyProvider, LegacyMoneyEconomy>);
 

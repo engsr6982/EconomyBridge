@@ -112,8 +112,8 @@ bool ScoreboardEconomy::transfer(const mce::UUID& from, const mce::UUID& to, int
     return false;
 }
 
-const std::string& ScoreboardEconomyProvider::getName() const { return ScoreboardEconomy::BackendName; }
-bool               ScoreboardEconomyProvider::isAvailable() const { return true; }
+std::string ScoreboardEconomyProvider::getName() const { return ScoreboardEconomy::BackendName; }
+bool        ScoreboardEconomyProvider::isAvailable() const { return true; }
 
 
 } // namespace econbridge::detail

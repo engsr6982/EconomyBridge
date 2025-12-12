@@ -15,7 +15,7 @@ class ScoreboardEconomy final : public IEconomy {
     std::string scoreBoardName_;
 
 public:
-    static constexpr auto      BackendName = "ScoreBoard";
+    static constexpr auto      BackendName = "ScoreboardEconomy";
     static Player*             uuid2player(mce::UUID const& uuid);
     static ScoreboardId const& getScoreboardId(Scoreboard& scoreboard, Player& player);
 
@@ -33,8 +33,8 @@ public:
 class ScoreboardEconomyProvider final : public IEconomyProvider,
                                         public ICreateFactory<ScoreboardEconomyProvider, ScoreboardEconomy> {
 public:
-    const std::string& getName() const override;
-    bool               isAvailable() const override;
+    std::string getName() const override;
+    bool        isAvailable() const override;
 };
 static_assert(concepts::EconomyImpl<ScoreboardEconomy>);
 static_assert(concepts::EconomyProvider<ScoreboardEconomyProvider>);

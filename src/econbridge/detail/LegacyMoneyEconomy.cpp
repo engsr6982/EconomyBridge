@@ -96,7 +96,7 @@ bool LegacyMoneyEconomy::transfer(const mce::UUID& from, const mce::UUID& to, in
 }
 
 
-const std::string& LegacyMoneyEconomyProvider::getName() const { return LegacyMoneyEconomy::BackendName; }
-bool               LegacyMoneyEconomyProvider::isAvailable() const { return LegacyMoneyEconomy::isLegacyMoneyLoaded(); }
+std::string LegacyMoneyEconomyProvider::getName() const { return LegacyMoneyEconomy::BackendName; }
+bool        LegacyMoneyEconomyProvider::isAvailable() const { return LegacyMoneyEconomy::isLegacyMoneyLoaded(); }
 
 } // namespace econbridge::detail

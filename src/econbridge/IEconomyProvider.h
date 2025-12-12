@@ -14,7 +14,7 @@ public:
 
     virtual ~IEconomyProvider() = default;
 
-    [[nodiscard]] virtual std::string const& getName() const = 0;
+    [[nodiscard]] virtual std::string getName() const = 0;
 
     [[nodiscard]] virtual bool isAvailable() const = 0;
 };
