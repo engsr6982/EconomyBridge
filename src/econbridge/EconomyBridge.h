@@ -12,7 +12,7 @@ class EconomyBridge {
     std::unordered_map<std::string, IEconomyProvider::Ptr> providers_{};
     IEconomy::Ptr                                          default_{nullptr};
 
-    EconomyBridge() = default;
+    EconomyBridge();
     bool registerProviderImpl(IEconomyProvider::Ptr provider);
 
 public:
@@ -23,7 +23,9 @@ public:
 
     [[nodiscard]] static EconomyBridge& getInstance();
 
-    bool hasProvider(std::string const& name) const;
+    [[nodiscard]] bool hasProvider(std::string const& name) const;
+
+    [[nodiscard]] std::vector<std::string> getProviders() const;
 
     template <concepts::EconomyProvider T>
     bool registerProvider(std::shared_ptr<T> provider) {

@@ -1,7 +1,14 @@
 #include "EconomyBridge.h"
 
+#include "detail/LegacyMoneyEconomy.h"
+#include "detail/ScoreboardEconomy.h"
+
 namespace econbridge {
 
+EconomyBridge::EconomyBridge() {
+    registerProvider<detail::LegacyMoneyEconomyProvider>();
+    registerProvider<detail::ScoreboardEconomyProvider>();
+}
 bool EconomyBridge::registerProviderImpl(IEconomyProvider::Ptr provider) {
     if (!provider || providers_.contains(provider->getName())) {
         return false;
@@ -13,7 +20,14 @@ EconomyBridge& EconomyBridge::getInstance() {
     static EconomyBridge instance;
     return instance;
 }
-bool EconomyBridge::hasProvider(std::string const& name) const { return providers_.contains(name); }
+bool                     EconomyBridge::hasProvider(std::string const& name) const { return providers_.contains(name); }
+std::vector<std::string> EconomyBridge::getProviders() const {
+    std::vector<std::string> names;
+    for (auto const& [name, _] : providers_) {
+        names.push_back(name);
+    }
+    return names;
+}
 bool EconomyBridge::unregisterProvider(std::string const& name) {
     if (!hasProvider(name)) {
         return false;
