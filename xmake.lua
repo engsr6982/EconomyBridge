@@ -2,7 +2,7 @@ add_rules("mode.debug", "mode.release")
 
 add_repositories("levimc-repo https://github.com/LiteLDev/xmake-repo.git")
 
-add_requires("levilamina 1.7.0", {configs = {target_type = "server"}})
+add_requires("levilamina 1.9.0", {configs = {target_type = "server"}})
 add_requires("levibuildscript")
 
 if not has_config("vs_runtime") then
@@ -21,3 +21,5 @@ target("EconomyBridge") -- Change this to your mod name.
     add_headerfiles("src/(econbridge/**.h)")
     add_files("src/**.cpp")
     add_includedirs("src")
+
+    add_defines("LL_PLAT_S")
